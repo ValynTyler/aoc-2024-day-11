@@ -24,10 +24,25 @@ impl From::<&str> for Stones {
 
 impl Stones {
     pub fn blink(self) -> Stones {
+        fn count_digits(number: u32) -> u32 {
+            if number != 0 {
+                1 + count_digits(number / 10)
+            }
+            else {
+                0
+            }
+        }
+
         Stones(self.0
             .into_iter()
             .flat_map(|number| {
-                vec![ if number == 0 { 1 } else { number }]
+                if number == 0 { vec![1] }
+                else { let digits = count_digits(number); if digits % 2 == 0 { 
+                    let left = number / u32::pow(10, digits / 2);
+                    let right = number % u32::pow(10, digits / 2);
+
+                    vec![left, right] 
+                } else { vec![number * 2024] }}
             })
             .collect()
         )
