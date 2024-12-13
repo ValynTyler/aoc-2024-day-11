@@ -37,12 +37,15 @@ impl Stones {
             .into_iter()
             .flat_map(|number| {
                 if number == 0 { vec![1] }
-                else { let digits = count_digits(number); if digits % 2 == 0 { 
-                    let left = number / u32::pow(10, digits / 2);
-                    let right = number % u32::pow(10, digits / 2);
+                else {
+                    let digits = count_digits(number);
+                    if digits % 2 == 0 { 
+                        let left = number / u32::pow(10, digits / 2);
+                        let right = number % u32::pow(10, digits / 2);
 
-                    vec![left, right] 
-                } else { vec![number * 2024] }}
+                        vec![left, right] 
+                    } else { vec![number * 2024] }
+                }
             })
             .collect()
         )
